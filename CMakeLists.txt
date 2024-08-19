@@ -233,6 +233,7 @@ endif()
 
 if (${sse2})
     target_compile_definitions(LSMASHSource PRIVATE SSE2_ENABLED=1)
+    message(STATUS "SSE2_ENABLED")
 endif()
 
 if (WIN32)
