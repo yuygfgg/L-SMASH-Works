@@ -226,10 +226,11 @@ if (NOT CMAKE_GENERATOR MATCHES "Visual Studio")
         target_compile_definitions(LSMASHSource PRIVATE DEBUG_BUILD)
     else (build_type STREQUAL release)
         target_compile_definitions(LSMASHSource PRIVATE RELEASE_BUILD)
+        target_compile_options(LSMASHSource PRIVATE -Ofast -funroll-loops)
     endif()
-
     message(STATUS "Build type - ${CMAKE_BUILD_TYPE}")
 endif()
+
 
 if (${sse2})
     target_compile_definitions(LSMASHSource PRIVATE SSE2_ENABLED=1)
