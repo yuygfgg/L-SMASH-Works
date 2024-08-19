@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
     - name: Checkout
@@ -30,10 +31,12 @@ jobs:
         ./configure --enable-gpl --enable-version3 --disable-static --enable-shared --disable-all --disable-autodetect --enable-avcodec --enable-avformat --enable-swresample --enable-swscale --disable-asm --disable-debug
         make -j2
         sudo make install -j2
+        sudo make install -j2
         popd
         rm -rf FFmpeg
 
     - name: Install obuparse
+      run : |
       run : |
         git clone https://github.com/dwbuiten/obuparse --depth 1
         pushd obuparse
@@ -41,6 +44,7 @@ jobs:
             sed -i '' 's/--version-script,obuparse.v/ /g' Makefile
         fi
         make -j2
+        sudo make install -j2
         sudo make install -j2
         popd
         rm -rf obuparse
@@ -56,6 +60,7 @@ jobs:
         ./configure --disable-static
         make lib -j2
         sudo make install-lib -j2
+        sudo make install-lib -j2
         popd
         rm -rf l-smash
 
@@ -64,6 +69,7 @@ jobs:
         git clone https://github.com/Cyan4973/xxHash --branch v0.8.2 --depth 1
         pushd xxHash
         cmake -S ./cmake_unofficial -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DXXHASH_BUILD_XXHSUM=OFF
+        cmake --build build -j 2
         cmake --build build -j 2
         sudo cmake --install build
         popd
@@ -79,11 +85,24 @@ jobs:
         popd
         rm -rf avisynth-build
 
+    - name: Install AviSynth
+      run: |
+        git clone https://github.com/AviSynth/AviSynthPlus --branch 3.7 --depth 1 avisynth-build
+        pushd avisynth-build
+        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_PLUGINS=OFF -DENABLE_INTEL_SIMD=OFF
+        cmake --build build -j 2
+        sudo cmake --install build
+        popd
+        rm -rf avisynth-build
+
     - name: Setup vapoursynth
       uses: deadnews/action-setup-vs@v1.0.4
 
     - name: Build AviSynth/VapourSynth plugin
+    - name: Build AviSynth/VapourSynth plugin
       run: |
+        cmake -S . -B build_avs -G Ninja -DENABLE_DAV1D=OFF -DENABLE_MFX=OFF -DENABLE_XML2=OFF -DBUILD_VS_PLUGIN=OFF -DENABLE_VPX=OFF
+        cmake --build build_avs -j 2
         cmake -S . -B build_avs -G Ninja -DENABLE_DAV1D=OFF -DENABLE_MFX=OFF -DENABLE_XML2=OFF -DBUILD_VS_PLUGIN=OFF -DENABLE_VPX=OFF
         cmake --build build_avs -j 2
         cmake -S . -B build_vs -G Ninja -DENABLE_DAV1D=OFF -DENABLE_MFX=OFF -DENABLE_XML2=OFF -DBUILD_AVS_PLUGIN=OFF -DENABLE_VPX=OFF
