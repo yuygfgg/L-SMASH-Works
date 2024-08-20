@@ -41,6 +41,7 @@ typedef unsigned short USHORT;
 #endif
 #elif defined(__arm__) || defined(__aarch64__)
 #include "sse2neon.h"
+#endif
 
 static LW_FORCEINLINE void fill_rgb_buffer_sse41( BYTE *rgb_buffer, BYTE *lw48_ptr )
 {
