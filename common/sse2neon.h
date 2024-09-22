@@ -60,19 +60,19 @@
  */
 /* _mm_min|max_ps|ss|pd|sd */
 #ifndef SSE2NEON_PRECISE_MINMAX
-#define SSE2NEON_PRECISE_MINMAX (0)
+#define SSE2NEON_PRECISE_MINMAX (1)
 #endif
 /* _mm_rcp_ps */
 #ifndef SSE2NEON_PRECISE_DIV
-#define SSE2NEON_PRECISE_DIV (0)
+#define SSE2NEON_PRECISE_DIV (1)
 #endif
 /* _mm_sqrt_ps and _mm_rsqrt_ps */
 #ifndef SSE2NEON_PRECISE_SQRT
-#define SSE2NEON_PRECISE_SQRT (0)
+#define SSE2NEON_PRECISE_SQRT (1)
 #endif
 /* _mm_dp_pd */
 #ifndef SSE2NEON_PRECISE_DP
-#define SSE2NEON_PRECISE_DP (0)
+#define SSE2NEON_PRECISE_DP (1)
 #endif
 
 /* Enable inclusion of windows.h on MSVC platforms
